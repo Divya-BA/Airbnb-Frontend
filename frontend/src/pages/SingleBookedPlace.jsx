@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 import AccountNav from '../components/AccountNav';
 import AddressLink from '../components/AddressLink';
 import BookingDates from '../components/BookingDates';
@@ -14,14 +14,27 @@ const SingleBookedPlace = () => {
   const [loading, setLoading] = useState(false);
   const navigate=useNavigate()
   const cancelBooking = async () => {
-    try {
-      await axiosInstance.delete(`/bookings/${booking._id}`);
-      // Redirect to the /account/bookings page after successful cancellation
-      navigate('/account/bookings');
-    } catch (error) {
-      console.error('Error canceling booking: ', error);
-    }
+    Swal.fire({
+      title: 'Cancel Booking?',
+      text: 'Are you sure you want to cancel this booking?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, cancel it',
+      cancelButtonText: 'No, keep it',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosInstance.delete(`/bookings/${booking._id}`);
+          navigate('/account/bookings');
+          Swal.fire('Booking Cancelled!', 'Your booking has been canceled.', 'success');
+        } catch (error) {
+          console.error('Error canceling booking: ', error);
+          Swal.fire('Error', 'An error occurred while canceling the booking.', 'error');
+        }
+      }
+    });
   };
+  
   const getBookings = async () => {
     try {
       setLoading(true);

@@ -14,7 +14,12 @@ const InfoCard = ({ place, onDelete }) => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        onDelete(place._id);
+        try {
+          onDelete(place._id);
+          Swal.fire('Your accomodation removed successfully');
+        } catch (error) {
+          Swal.fire('Error', 'An error occurred while canceling the booking.', 'error');
+        }
       }
     });
   };

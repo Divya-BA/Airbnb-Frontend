@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { GoogleLogin } from "@react-oauth/google";
-
-import ProfilePage from "./ProfilePage";
 import { useAuth } from "../hooks";
 
 const LoginPage = () => {
