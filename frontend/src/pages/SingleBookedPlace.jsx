@@ -1,30 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import AccountNav from "../components/AccountNav";
-import AddressLink from "../components/AddressLink";
-import BookingDates from "../components/BookingDates";
-import PlaceGallery from "../components/PlaceGallery";
-import Spinner from "../components/Spinner";
-import axiosInstance from "../utils/axios";
+import AccountNav from '../components/AccountNav';
+import AddressLink from '../components/AddressLink';
+import BookingDates from '../components/BookingDates';
+import PlaceGallery from '../components/PlaceGallery';
+import Spinner from '../components/Spinner';
+import axiosInstance from '../utils/axios';
 
 const SingleBookedPlace = () => {
   const { id } = useParams();
   const [booking, setBooking] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const navigate=useNavigate()
+  const cancelBooking = async () => {
+    try {
+      await axiosInstance.delete(`/bookings/${booking._id}`);
+      // Redirect to the /account/bookings page after successful cancellation
+      navigate('/account/bookings');
+    } catch (error) {
+      console.error('Error canceling booking: ', error);
+    }
+  };
   const getBookings = async () => {
     try {
       setLoading(true);
-      const { data } = await axiosInstance.get("/bookings");
+      const { data } = await axiosInstance.get('/bookings');
 
       const filteredBooking = data.booking.filter(
-        (booking) => booking._id === id
+        (booking) => booking._id === id,
       );
 
       setBooking(filteredBooking[0]);
     } catch (error) {
-      console.log("Error: ", error);
+      console.log('Error: ', error);
     } finally {
       setLoading(false);
     }
@@ -64,6 +73,14 @@ const SingleBookedPlace = () => {
             </div>
           </div>
           <PlaceGallery place={booking?.place} />
+          <div className="flex justify-center ">
+                <button
+                  onClick={() => cancelBooking(booking._id)}
+                  className="mx-10 mt-1 md:mx-1 gap-1 py-1 px-6 rounded-full text-white bg-primary hover:bg-red-600"
+                >
+                  Cancel Booking
+                </button>
+              </div>
         </div>
       ) : (
         <h1> No data</h1>
