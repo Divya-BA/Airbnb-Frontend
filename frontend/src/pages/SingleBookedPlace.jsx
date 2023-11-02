@@ -76,7 +76,7 @@ const SingleBookedPlace = () => {
           <div className="flex justify-center ">
                 <button
                   onClick={() => cancelBooking(booking._id)}
-                  className="mx-10 mt-1 md:mx-1 gap-1 py-1 px-6 rounded-full text-white bg-primary hover:bg-red-600"
+                  className="mx-10 mt-3 md:mx-1 gap-1 py-1 px-6 rounded-full text-white bg-primary hover:bg-red-600"
                 >
                   Cancel Booking
                 </button>
