@@ -30,7 +30,7 @@ const SearchBar = () => {
 
   return (
     <>
-      <div className="flex w-4/6 overflow-hidden rounded-full border border-gray-400 bg-gray-300 shadow-sm hover:shadow-lg md:w-1/2">
+      <div className="flex w-4/6 overflow-hidden h-11 rounded-full border border-gray-400 bg-gray-300 shadow-sm hover:shadow-lg md:w-1/2">
         <div className="grow">
           <input
             type="search"

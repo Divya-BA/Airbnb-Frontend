@@ -20,7 +20,7 @@ const PlacesFormPage = () => {
     address: "",
     description: "",
     perks: [],
-    extraInfo: "",
+    guestAccess: "",
     checkIn: "",
     checkOut: "",
     maxGuests: 10,
@@ -32,7 +32,7 @@ const PlacesFormPage = () => {
     address,
     description,
     perks,
-    extraInfo,
+    guestAccess,
     checkIn,
     checkOut,
     maxGuests,
@@ -190,10 +190,10 @@ const PlacesFormPage = () => {
         {preInput("Perks", " select all the perks of your place")}
         <Perks selected={perks} handleFormData={handleFormData} />
 
-        {preInput("Extra info", "house rules, etc ")}
+        {preInput("Guest Access", "house rules, etc ")}
         <textarea
-          value={extraInfo}
-          name="extraInfo"
+          value={guestAccess}
+          name="guestAccess"
           onChange={handleFormData}
         />
 

@@ -45,12 +45,12 @@ export const Header = () => {
       >
         <a href="/" className="flex items-center gap-1">
           <img
-            className="h-8 w-8 md:h-10 md:w-10"
+            className="h-8 w-8 md:h-7 md:w-7"
             src="https://cdn-icons-png.flaticon.com/512/2111/2111320.png"
             alt=""
           />
 
-          <span className="hidden text-2xl font-bold text-red-500 md:block">
+          <span className="hidden text-xl font-bold text-red-500 md:block">
             airbnb
           </span>
         </a>
@@ -67,7 +67,7 @@ export const Header = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="hidden h-6 w-6 md:block"
+            className="hidden h-4 w-4 md:block"
           >
             <path
               strokeLinecap="round"
