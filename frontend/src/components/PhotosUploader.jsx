@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-
+import Spinner from "../components/Spinner";
 import Image from "./Image";
 import axiosInstance from "../utils/axios";
 
 const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
   const [photoLink, setphotoLink] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const addPhotoByLink = (e) => {
     e.preventDefault();
+    setUploading(true);
     axiosInstance
       .post("/upload-by-link", { link: photoLink })
       .then((response) => {
@@ -20,6 +22,9 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setUploading(false);
       });
     setphotoLink("");
   };
@@ -30,13 +35,26 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
     for (let i = 0; i < files.length; i++) {
       data.append("photos", files[i]);
     }
-    const { data: filenames } = await axiosInstance.post("/upload", data, {
-      headers: { "Content-type": "multipart/form-data" },
-    });
-    setAddedPhotos((prev) => {
-      return [...prev, ...filenames];
-    });
+    setUploading(true);
+    try {
+      const { data: filenames } = await axiosInstance.post("/upload", data, {
+        headers: { "Content-type": "multipart/form-data" },
+      });
+
+      setAddedPhotos((prev) => [...prev, ...filenames]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setUploading(false);
+    }
   };
+  //   const { data: filenames } = await axiosInstance.post("/upload", data, {
+  //     headers: { "Content-type": "multipart/form-data" },
+  //   });
+  //   setAddedPhotos((prev) => {
+  //     return [...prev, ...filenames];
+  //   });
+  // };
 
   const removePhoto = (filename) => {
     setAddedPhotos([...addedPhotos.filter((photo) => photo !== filename)]);
@@ -63,10 +81,12 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
         <button
           className="rounded-2xl bg-gray-200 px-4"
           onClick={addPhotoByLink}
+          disabled={uploading}
         >
-          Add&nbsp;photo
+          {uploading ? "Uploading..." : "Add photo"}{" "}
         </button>
       </div>
+      {uploading && <Spinner />}
       <div className="mt-2 grid grid-cols-3 gap-2 md:grid-cols-4 lg:grid-cols-6 ">
         {addedPhotos?.length > 0 &&
           addedPhotos.map((link) => (
@@ -133,6 +153,7 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
               </button>
             </div>
           ))}
+        {uploading && <Spinner />}
         <label className="flex h-32 cursor-pointer items-center justify-center gap-1 rounded-2xl border bg-transparent p-2 text-2xl text-gray-600">
           <input
             type="file"
