@@ -55,7 +55,7 @@ const PlacesFormPage = () => {
     } else if (maxGuests < 1) {
       toast.error("At least one guests is required!");
       return false;
-    } else if (maxGuests > 10) {
+    } else if (maxGuests > 15) {
       toast.error("Max. guests can't be greater than 10");
       return false;
     }
