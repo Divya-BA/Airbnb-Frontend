@@ -48,13 +48,7 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }) => {
       setUploading(false);
     }
   };
-  //   const { data: filenames } = await axiosInstance.post("/upload", data, {
-  //     headers: { "Content-type": "multipart/form-data" },
-  //   });
-  //   setAddedPhotos((prev) => {
-  //     return [...prev, ...filenames];
-  //   });
-  // };
+ 
 
   const removePhoto = (filename) => {
     setAddedPhotos([...addedPhotos.filter((photo) => photo !== filename)]);
