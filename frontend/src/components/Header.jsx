@@ -22,7 +22,7 @@ export const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
-    if (location.pathname === "/") {
+    if (location.pathname === "/home") {
       setShowSearchBar(true);
     } else {
       setShowSearchBar(false);
@@ -38,12 +38,13 @@ export const Header = () => {
         hasShadow ? "shadow-md" : ""
       }`}
     >
-      <div
+      {/* <div
         className={`flex ${
-          showSearchBar ? "justify-around" : "justify-between px-10"
+          showSearchBar ? "justify-between" : "justify-between"
         } w-screen max-w-screen-xl`}
-      >
-        <a href="/" className="flex items-center gap-1">
+      > */}
+        <div  className={"flex justify-between w-screen max-w-screen-xl"}>
+        <a href="/home" className="flex items-center gap-1">
           <img
             className="h-8 w-8 md:h-7 md:w-7"
             src="https://cdn-icons-png.flaticon.com/512/2111/2111320.png"

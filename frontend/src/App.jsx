@@ -21,6 +21,7 @@ import { getItemFromLocalStorage } from "./utils";
 import NotFoundPage from "./pages/NotFoundPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   useEffect(() => {
@@ -39,7 +40,8 @@ function App() {
         <PlaceProvider>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<IndexPage />} />
+              <Route index element={<HomePage/>} />
+              <Route path="/home" element={<IndexPage/>}/>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
