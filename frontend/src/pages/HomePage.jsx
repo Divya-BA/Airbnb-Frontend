@@ -4,7 +4,6 @@ import { GoShieldCheck } from "react-icons/go";
 import { TbAirConditioningDisabled } from "react-icons/tb";
 import { FaSwimmingPool } from "react-icons/fa";
 import { GiWashingMachine } from "react-icons/gi";
-
 import axiosInstance from "../utils/axios";
 import { usePlaces } from "../hooks";
 
@@ -20,8 +19,8 @@ function HomePage() {
   const handleSearch = async (e) => {
     clearTimeout(searchTimeout);
     setSearchText(e.target.value);
+
     if (searchText.trimStart() !== "") {
-      navigate('/home')
       setLoading(true);
       setSearchTimeout(
         setTimeout(async () => {
@@ -30,10 +29,14 @@ function HomePage() {
           );
           setPlaces(data);
           setLoading(false);
-        }, 500)
+          navigate('/home');
+
+        },100)
       );
     }
   };
+  
+  
 
   
   return (
@@ -44,26 +47,27 @@ function HomePage() {
           <p className="text-sm text-gray-500">
             Discover entire homes and rooms perfect for any trip
           </p>
-          <form className="m-4">
+          <div className="m-4">
             <label className="text-sm">Location:</label>
             <input
             className="my-2 w-full rounded-[10px] border py-2 px-3"
               type="search"
               placeholder="Where you want to go"
-              onChange={(e) => handleSearch(e)}  
+              onChange={(e) => setSearchText(e.target.value)}  
               value={searchText}
               />
             <label className="text-sm">No.of.guest:</label>
             <input
-              type="text"
+              type="number"
               placeholder="Max no. of guests"
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
             />
-            <button  onClick={handleSearch} className="bg-primary w-80 text-white rounded-md mt-4 h-10">
+            <button 
+             onClick={handleSearch} className="bg-primary w-80 text-white rounded-md mt-4 h-10">
               Search
             </button>
-          </form>
+          </div>
         </div>
         <img
           src="https://a0.muscache.com/im/pictures/9caaca2d-6892-4638-b675-6a879974f5ed.jpg"
