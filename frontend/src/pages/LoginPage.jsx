@@ -26,7 +26,7 @@ const LoginPage = () => {
   };
 
   if (redirect) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={"/home"} />;
   }
 
   // if (auth.user) {
