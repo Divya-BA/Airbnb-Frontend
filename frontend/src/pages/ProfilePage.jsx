@@ -10,11 +10,12 @@ import PlacesPage from "./PlacePage";
 import { useAuth } from "../hooks";
 import { LogOut, Mail, PenSquare, Text } from "lucide-react";
 import EditProfileDialog from "../components/EditProfileDialog";
-
+import Spinner from "../components/Spinner";
 const ProfilePage = () => {
   const auth = useAuth();
   const { user, logout } = auth;
   const [redirect, setRedirect] = useState(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   let { subpage } = useParams();
   if (!subpage) {
@@ -22,12 +23,14 @@ const ProfilePage = () => {
   }
 
   const handleLogout = async () => {
+    setIsLoggingOut(true);
     const response = await logout();
     if (response.success) {
       toast.success(response.message);
       setRedirect("/");
     } else {
       toast.error(response.message);
+      setIsLoggingOut(false);
     }
   };
 
@@ -80,11 +83,15 @@ const ProfilePage = () => {
 
             <div className="flex w-full justify-around sm:justify-end sm:gap-5 md:gap-10">
               <EditProfileDialog />
-
-              <Button variant="secondary" onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
+              {isLoggingOut ? ( // Conditionally render the spinner
+                <Spinner />
+              ) : (
+                <Button variant="secondary" onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </Button>
+              )}
+              
             </div>
           </div>
         </div>
