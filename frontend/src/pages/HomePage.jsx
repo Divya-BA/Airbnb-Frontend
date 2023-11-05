@@ -6,6 +6,8 @@ import { FaSwimmingPool } from "react-icons/fa";
 import { GiWashingMachine } from "react-icons/gi";
 import axiosInstance from "../utils/axios";
 import { usePlaces } from "../hooks";
+import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -15,12 +17,14 @@ function HomePage() {
   const [searchText, setSearchText] = useState("");
   const [guests, setGuests] = useState(0);
   const [searchTimeout, setSearchTimeout] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSearch = async (e) => {
     clearTimeout(searchTimeout);
     setSearchText(e.target.value);
 
     if (searchText.trimStart() !== "") {
+      setIsSearching(true);
       setLoading(true);
       setSearchTimeout(
         setTimeout(async () => {
@@ -29,16 +33,18 @@ function HomePage() {
           );
           setPlaces(data);
           setLoading(false);
-          navigate('/home');
-
-        },100)
+          setIsSearching(false);
+          navigate("/home");
+        }, 100)
       );
+    } else {
+      toast.error("Location is required", {
+        position: "top-right",
+        autoClose: 2000,
+      });
     }
   };
-  
-  
 
-  
   return (
     <div>
       <div class="flex justify-center m-20 ">
@@ -50,12 +56,12 @@ function HomePage() {
           <div className="m-4">
             <label className="text-sm">Location:</label>
             <input
-            className="my-2 w-full rounded-[10px] border py-2 px-3"
+              className="my-2 w-full rounded-[10px] border py-2 px-3"
               type="search"
               placeholder="Where you want to go"
-              onChange={(e) => setSearchText(e.target.value)}  
+              onChange={(e) => setSearchText(e.target.value)}
               value={searchText}
-              />
+            />
             <label className="text-sm">No.of.guest:</label>
             <input
               type="number"
@@ -63,10 +69,13 @@ function HomePage() {
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
             />
-            <button 
-             onClick={handleSearch} className="bg-primary w-80 text-white rounded-md mt-4 h-10">
+            <button
+              onClick={handleSearch}
+              className="bg-primary w-80 text-white rounded-md mt-4 h-10"
+            >
               Search
             </button>
+            {isSearching && <Spinner />}
           </div>
         </div>
         <img
