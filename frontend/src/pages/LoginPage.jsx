@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks";
+import Spinner from "../components/Spinner";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [redirect, setRedirect] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const auth = useAuth();
 
   const handleFormData = (e) => {
@@ -15,13 +17,14 @@ const LoginPage = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoggingIn(true);
     const response = await auth.login(formData);
     if (response.success) {
       toast.success(response.message);
       setRedirect(true);
     } else {
       toast.error(response.message);
+      setIsLoggingIn(false);
     }
   };
 
@@ -52,7 +55,12 @@ const LoginPage = () => {
             value={formData.password}
             onChange={handleFormData}
           />
-          <button className="primary my-4">Login</button>
+            {isLoggingIn ? ( 
+            <Spinner />
+          ) : (
+            <button className="primary my-4">Login</button>
+          )}
+         
         </form>
         <div className="py-2 text-center text-gray-500">
           Don't have an account yet?{" "}

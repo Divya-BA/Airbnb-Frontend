@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
-
+import Spinner from "../components/Spinner"
 import { useAuth } from "../hooks";
 
 const RegisterPage = () => {
@@ -13,6 +13,7 @@ const RegisterPage = () => {
   });
   const [redirect, setRedirect] = useState(false);
   const auth = useAuth();
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const handleFormData = (e) => {
     const { name, value } = e.target;
@@ -21,13 +22,14 @@ const RegisterPage = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+ setIsRegistering(true);
     const response = await auth.register(formData);
     if (response.success) {
       toast.success(response.message);
       setRedirect(true);
     } else {
       toast.error(response.message);
+      setIsRegistering(false);
     }
   };
 
@@ -61,7 +63,10 @@ const RegisterPage = () => {
             value={formData.password}
             onChange={handleFormData}
           />
-          <button className="primary my-2">Register</button>
+          {isRegistering ? (<Spinner/>):(
+            <button className="primary my-2">Register</button>
+          )}
+          
         </form>
 
         <div className="py-2 text-center text-gray-500">

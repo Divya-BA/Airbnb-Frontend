@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axiosInstance from "../utils/axios";
 import axios from "axios";
+import Spinner from "../components/Spinner";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
   axios.defaults.withCredentials = true;
   const handleForgotPassword = (e) => {
     e.preventDefault();
+    setIsSendingEmail(true);
     axiosInstance
       .post("/auth/forgot-password", { email })
       .then((res) => {
@@ -17,10 +20,12 @@ const ForgotPasswordPage = () => {
         } else {
           toast.error("Failed to send email");
         }
+        setIsSendingEmail(false);
       })
       .catch((err) => {
         toast.error("An error occurred");
         console.log(err);
+        setIsSendingEmail(false);
       });
   };
 
@@ -33,9 +38,14 @@ const ForgotPasswordPage = () => {
             type="email"
             placeholder="your@email.com"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
           />
-          <button className="primary my-4">Send Reset Email</button>
+           {isSendingEmail ? (
+            <Spinner />
+          ) : (
+            <button className="primary my-4">Send Reset Email</button>
+          )}
         </form>
       </div>
     </div>
