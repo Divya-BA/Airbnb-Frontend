@@ -38,13 +38,13 @@ export const Header = () => {
         hasShadow ? "shadow-md" : ""
       }`}
     >
-      {/* <div
+      <div
         className={`flex ${
           showSearchBar ? "justify-between" : "justify-between"
-        } w-screen max-w-screen-xl`}
-      > */}
-        <div  className={"flex justify-between w-screen max-w-screen-xl"}>
-        <a href="/home" className="flex items-center gap-1">
+        } w-screen`}
+      >
+        {/* <div  className={"flex justify-between w-screen max-w-screen-xl"}> */}
+        <a href="/home" className="flex items-center gap-1 ml-7">
           <img
             className="h-8 w-8 md:h-7 md:w-7"
             src="https://cdn-icons-png.flaticon.com/512/2111/2111320.png"
@@ -60,7 +60,7 @@ export const Header = () => {
 
         <Link
           to={user ? "/account" : "/login"}
-          className="w-50 flex h-full items-center gap-2 rounded-full border-gray-300 py-1 px-2 md:border"
+          className="w-50 mr-7 flex h-full items-center gap-2 rounded-full border-gray-300 py-1 px-2 md:border"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
