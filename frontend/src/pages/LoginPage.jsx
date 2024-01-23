@@ -28,13 +28,13 @@ const LoginPage = () => {
     }
   };
 
+  const handleDemoCredentials = () => {
+    setFormData({ email: "linder010101@gmail.com", password: "linder@01" });
+  };
+
   if (redirect) {
     return <Navigate to={"/home"} />;
   }
-
-  // if (auth.user) {
-  //   return <ProfilePage />;
-  // }
 
   return (
     <div className="mt-4 flex grow items-center justify-around p-4 md:p-0">
@@ -55,12 +55,11 @@ const LoginPage = () => {
             value={formData.password}
             onChange={handleFormData}
           />
-            {isLoggingIn ? ( 
+          {isLoggingIn ? (
             <Spinner />
           ) : (
             <button className="primary my-4">Login</button>
           )}
-         
         </form>
         <div className="py-2 text-center text-gray-500">
           Don't have an account yet?{" "}
@@ -69,10 +68,20 @@ const LoginPage = () => {
           </Link>
           <div>
             <Link className="text-black underline" to={"/forgot-password"}>
-              ForgotPassword!
+              Forgot Password!
             </Link>
           </div>
         </div>
+        {isLoggingIn ? (
+          <Spinner />
+        ) : (
+          <button
+            className="primary my-4"
+            onClick={handleDemoCredentials}
+          >
+            Use Demo Credential
+          </button>
+        )}
       </div>
     </div>
   );

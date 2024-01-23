@@ -47,8 +47,8 @@ function HomePage() {
 
   return (
     <div>
-      <div class="flex justify-center m-20 ">
-        <div class="absolute bg-white p-6 rounded-lg shadow-md left-20 mt-20 ml-20 min-h-[45%] w-96">
+      <div className="flex justify-center m-20 ">
+        <div className="absolute bg-white p-6 rounded-lg shadow-md left-20 mt-20 ml-20 min-h-[45%] w-96">
           <h3 className="text-3xl font-bold">Find Places to stay on Airbnb</h3>
           <p className="text-sm text-gray-500">
             Discover entire homes and rooms perfect for any trip
